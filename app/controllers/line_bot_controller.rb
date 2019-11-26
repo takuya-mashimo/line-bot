@@ -20,10 +20,10 @@ class LineBotController < ApplicationController
         when Line::Bot::Event::Message
           case event.type
             # ユーザーからテキスト形式のメッセージが送られた場合
-          when LIne::Bot::Event::MessageType::Text
+          when Line::Bot::Event::MessageType::Text
             # event.message['text']:ユーザーから送られたメッセージ
             input = event.messgae['text']
-            url = "https://www.drk7.jp/weather/xml/13.xml"
+            url = "https://www.drk7.jp/weather/xml/10.xml"
             xml = open( url ).read.toutf8
             doc = REXML::Document.new(xml)
             xpath = 'weatherforecast/pref/area[2]/'
@@ -86,7 +86,7 @@ class LineBotController < ApplicationController
             push = "テキスト以外はわからないよ〜(;;)"
           end
           message = {
-            type: 'text'
+            type: 'text',
             text: push
           }
           client.reply_message(event[replyToken], message)
@@ -109,8 +109,8 @@ class LineBotController < ApplicationController
 
     def client
       @client ||= Line::Bot::Client.new { |config|
-      config.channel_id = ENV["LINE_CHANNEL_ID"]
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+      }
     end
-end 
+end
