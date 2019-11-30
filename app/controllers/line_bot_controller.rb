@@ -1,5 +1,5 @@
 class LineBotController < ApplicationController
-    require 'sinatra'
+    require 'open-uri'
     require 'line/bot'
     require 'kconv'
     require 'rexml/document'
